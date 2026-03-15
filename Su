@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Nazo Appi!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;700&display=swap');
+
+        body {
+            margin: 0; padding: 0;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            height: 100vh; overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            text-align: center;
+        }
+
+        .falling-item {
+            position: absolute; top: -50px; font-size: 30px;
+            user-select: none; pointer-events: none; z-index: 1;
+            animation: fall linear forwards;
+        }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+
+        .container { z-index: 10; background: rgba(255, 255, 255, 0.2); padding: 30px; border-radius: 20px; backdrop-filter: blur(5px); border: 2px solid white; }
+
+        .gift-wrapper { cursor: pointer; transition: 0.3s; }
+        .gift-wrapper:hover { transform: scale(1.1); }
+        .box {
+            width: 140px; height: 140px; background: #ff4757;
+            margin: 0 auto; position: relative; border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .box::after { content: ''; position: absolute; width: 30px; height: 100%; background: #f1c40f; left: 55px; }
+        .box::before { content: ''; position: absolute; width: 100%; height: 30px; background: #f1c40f; top: 55px; left: 0; }
+
+        #main-party { display: none; animation: zoomIn 1s ease; }
+        @keyframes zoomIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        h1 { font-family: 'Pacifico', cursive; color: #d63031; font-size: 2.8rem; margin: 10px 0; }
+        
+        .btn-link {
+            display: inline-block; margin: 5px; padding: 12px 20px;
+            background: #6c5ce7; color: white; text-decoration: none;
+            border-radius: 50px; font-size: 0.9rem; font-weight: bold;
+            transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .btn-link:hover { background: #a29bfe; transform: translateY(-3px); }
+
+        .award-btn {
+            background: #f1c40f; border: none; padding: 15px 30px;
+            color: #2d3436; font-weight: bold; border-radius: 50px;
+            cursor: pointer; margin: 20px 0; font-size: 1.2rem;
+            box-shadow: 0 5px 20px rgba(241, 196, 15, 0.5);
+        }
+
+        #award-screen {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.9);
+            z-index: 100; justify-content: center; align-items: center;
+            flex-direction: column; color: gold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="click-me" class="gift-wrapper" onclick="launchParty()">
+            <div class="box"></div>
+            <h2 style="color: #d63031;">Tap to Open Surprise, Nazo Appi! 🎁</h2>
+        </div>
+
+        <div id="main-party">
+            <h1>Happy Birthday Nazo Appi! 🎂</h1>
+            <p style="font-size: 1.2rem; color: #2d3436;"><b>Future Tech Queen & Best Appi Ever!</b></p>
+            
+            <button class="award-btn" onclick="showAward()">🏆 Click for Your Award</button>
+
+            <div style="margin-top: 20px;">
+                <a href="https://www.pdfdrive.com" class="btn-link" target="_blank">📚 PDF Drive</a>
+                <a href="https://youtube.com/@hubermanlab" class="btn-link" target="_blank">🧬 Huberman Lab</a><br>
+                <a href="https://youtube.com/@briantracyofficial" class="btn-link" target="_blank">🚀 Brian Tracy</a>
+                <a href="https://youtube.com/@gauravgupta6685" class="btn-link" target="_blank">💻 Tech Tips</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="award-screen" onclick="this.style.display='none'">
+        <div style="font-size: 100px;">🥇</div>
+        <h1 style="color: #f1c40f;">BEST APPI EVER</h1>
+        <p style="color: white;">Aap jaisa koi nahi! (Tap anywhere to go back)</p>
+    </div>
+
+    <audio id="bday-song" loop src="birthday.mp3"></audio>
+
+    <script>
+        const emojis = ['🎀','🎆','🎊','🎉','🌸','🌺','🍰','🎈','🎁','🎄','🎗','🎊','🍩','🎂','🎂','🎂'];
+
+        function createFallingItem() {
+            const item = document.createElement('div');
+            item.classList.add('falling-item');
+            item.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            item.style.left = Math.random() * 100 + "vw";
+            item.style.animationDuration = Math.random() * 3 + 2 + "s";
+            document.body.appendChild(item);
+            setTimeout(() => { item.remove(); }, 5000);
+        }
+
+        function launchParty() {
+            document.getElementById('click-me').style.display = 'none';
+            document.getElementById('main-party').style.display = 'block';
+
+            // Music bajne lagega
+            const song = document.getElementById('bday-song');
+            song.play().catch(error => console.log("Music play failed, needs user tap"));
+
+            // Emoji ki baarish
+            setInterval(createFallingItem, 150); 
+        }
+
+        function showAward() {
+            document.getElementById('award-screen').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
